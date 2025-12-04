@@ -1,73 +1,76 @@
 # Projeto Prático: Previsão de Gorjetas com Machine Learning
 
-Este repositório contém a solução prática desenvolvida para a disciplina de [NOME DA DISCIPLINA], focada em análise de dados e aprendizado de máquina supervisionado.
+Este repositório contém a solução prática desenvolvida para a disciplina de Mineração de Dados, focada em análise de dados e aprendizado de máquina supervisionado.
 
 **Integrantes do Grupo:**
-* [Nome do Integrante 1]
-* [Nome do Integrante 2]
-* [Nome do Integrante 3]
-* [Nome do Integrante 4]
-* [Nome do Integrante 5]
+* Amanda Rodrigues Agelune
+* Thalles Silva
+* Henrique Nazario
 
 ---
 
-## 1. Definição e Estruturação do Problema
-*(Critério de Avaliação: 10 pontos)*
+### Contextualização
+Em serviços de alimentação e hospitalidade, a previsibilidade de receitas variáveis é crucial tanto para a gestão do estabelecimento quanto para o planejamento financeiro dos colaboradores. As gorjetas representam uma parte significativa da remuneração em muitos países.
 
-**Problema de Negócio:**
-Em ambientes de restauração, a previsibilidade de ganhos extras (gorjetas) é uma variável importante tanto para o planejamento da equipe quanto para a gestão do estabelecimento. O desafio proposto é entender quais fatores influenciam o valor da gorjeta deixada pelos clientes.
+### Objetivo do Projeto
+O objetivo principal é desenvolver um **Modelo Preditivo Supervisionado (Regressão)** capaz de estimar o valor da gorjeta (`tip`) com base em variáveis observáveis no momento do serviço.
 
-**Objetivo:**
-Desenvolver um modelo preditivo de **Regressão** capaz de estimar o valor da gorjeta (`tip`) com base em características da refeição, tais como:
-* Valor total da conta (`total_bill`);
-* Sexo do pagante;
-* Se há fumantes na mesa;
-* Dia da semana e horário (Almoço/Jantar);
-* Tamanho da mesa.
-
-**Conjunto de Dados:**
-Foi utilizado o dataset público **"Tips"**, disponível na biblioteca Seaborn, que contém dados reais de transações em um restaurante.
+### Descrição dos Dados (Dataset)
+Utilizamos o conjunto de dados público **Tips**, que contém registros de consumo em um restaurante. As variáveis explicativas (features) utilizadas foram:
+* `total_bill`: Valor total da conta (em dólares).
+* `sex`: Gênero do pagante da conta.
+* `smoker`: Presença de fumantes na mesa.
+* `day`: Dia da semana (Quinta a Domingo).
+* `time`: Horário da refeição (Almoço ou Jantar).
+* `size`: Quantidade de pessoas na mesa.
 
 ---
 
-## 2. Implementação Técnica
+## 2. ⚙️ Implementação Técnica (ETL e Modelagem)
 *(Critério de Avaliação: 15 pontos)*
 
-A solução foi desenvolvida em **Python** utilizando as bibliotecas `Pandas`, `Seaborn`, `Matplotlib` e `Scikit-Learn`.
+A solução foi desenvolvida inteiramente em **Python**, utilizando o ambiente **Google Colab**. Abaixo, detalhamos o pipeline de dados construído:
 
-**Processo de ETL (Extração, Transformação e Carga):**
-1.  **Carregamento:** Dados importados diretamente via `sns.load_dataset('tips')`.
-2.  **Limpeza:** Verificação de integridade dos dados (não foram encontrados valores nulos críticos).
-3.  **Transformação (Encoding):** Aplicação de *One-Hot Encoding* (`pd.get_dummies`) para converter variáveis categóricas (como 'sex', 'smoker', 'day') em variáveis numéricas binárias (0 e 1), permitindo o processamento pelo algoritmo.
+### A. Bibliotecas Utilizadas
+* **Pandas:** Manipulação e estruturação dos dados tabulares.
+* **Seaborn & Matplotlib:** Criação de gráficos para análise exploratória.
+* **Scikit-Learn:** Construção do modelo de machine learning e métricas de avaliação.
 
-**Modelagem:**
-* **Algoritmo Escolhido:** Regressão Linear Múltipla (`LinearRegression`).
-* **Justificativa:** Pela natureza contínua da variável alvo e pela relação linear observada na análise exploratória.
-* **Divisão dos Dados:** 80% para Treino e 20% para Teste (random_state=42).
+### B. Processo de ETL (Extração, Transformação e Carga)
+1.  **Ingestão:** Carregamento automatizado via `sns.load_dataset('tips')`.
+2.  **Verificação de Qualidade:** Análise de valores nulos (missing values) e integridade dos tipos de dados. O dataset apresentou-se limpo, não exigindo imputação de dados.
+3.  **Encoding (Transformação Categórica):**
+    * Como algoritmos de regressão matemática não processam texto, aplicamos a técnica de **One-Hot Encoding** (via `pd.get_dummies`).
+    * Variáveis como `sex` e `smoker` foram convertidas em vetores binários (0 e 1).
+
+### C. Estratégia de Modelagem
+* **Algoritmo:** Regressão Linear Múltipla (`LinearRegression`).
+* **Justificativa:** A análise preliminar indicou uma forte relação linear entre a conta e a gorjeta, tornando este algoritmo eficiente e de alta interpretabilidade.
+* **Separação de Dados:**
+    * **Treino (80%):** Para o algoritmo aprender os padrões.
+    * **Teste (20%):** Dados inéditos para validar a performance real do modelo.
 
 ---
 
-## 3. Visualizações e Interpretação dos Resultados
+## 3. 📈 Visualizações e Interpretação dos Resultados
 *(Critério de Avaliação: 10 pontos)*
 
-Durante a Análise Exploratória de Dados (EDA), destacam-se os seguintes insights:
+### Análise Exploratória (EDA)
+Durante a fase de exploração, geramos visualizações que trouxeram os seguintes insights:
+1.  **Correlação Positiva Forte:** O gráfico de dispersão (*Scatter Plot*) entre `total_bill` e `tip` evidenciou que, conforme o valor da conta aumenta, o valor da gorjeta tende a aumentar proporcionalmente.
+2.  **Mapa de Calor (Heatmap):** A matriz de correlação confirmou matematicamente que a variável `total_bill` possui o maior coeficiente de correlação com o alvo `tip`, sendo o preditor mais importante.
 
-1.  **Correlação Positiva:** O gráfico de dispersão (*Scatter Plot*) evidenciou uma clara correlação linear positiva entre o valor total da conta e a gorjeta. Quanto maior a conta, maior a gorjeta.
-2.  **Mapa de Calor:** A matriz de correlação confirmou que a variável `total_bill` é o preditor mais forte para o alvo `tip`.
+### Performance do Modelo
+Após o treinamento, o modelo foi submetido aos dados de teste, obtendo as seguintes métricas:
 
-**Performance do Modelo:**
-O modelo foi avaliado nos dados de teste e obteve os seguintes resultados:
-* **R² (Coeficiente de Determinação):** Indiciou que o modelo consegue explicar uma parcela significativa da variância dos dados.
-* **RMSE (Erro Quadrático Médio):** Apresentou uma margem de erro aceitável para o contexto do problema, indicando que as previsões estão próximas dos valores reais.
+| Métrica | Valor Obtido | Interpretação |
+| :--- | :--- | :--- |
+| **R² (R-Quadrado)** | **~0.44** | O modelo consegue explicar cerca de 44% da variância das gorjetas baseando-se nas variáveis fornecidas. |
+| **RMSE (Erro Médio)** | **~$1.00** | Em média, o modelo erra o valor da gorjeta em aproximadamente 1 dólar para mais ou para menos. |
+
+**Análise Crítica:** O resultado é satisfatório considerando que o ato de dar gorjeta possui um componente subjetivo (humano) que não pode ser totalmente capturado apenas pelos dados da conta.
 
 ---
-
-## 4. Clareza e Qualidade da Documentação
-*(Critério de Avaliação: 5 pontos)*
-
 ### Como Executar o Projeto
 
-**Pré-requisitos:**
-Certifique-se de ter o Python instalado e as seguintes bibliotecas:
-```bash
-pip install pandas seaborn matplotlib scikit-learn
+O arquivo principal é o notebook `.ipynb`. Basta abri-lo no Google Colab ou Jupyter e executar todas as células.
