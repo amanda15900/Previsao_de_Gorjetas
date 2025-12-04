@@ -27,7 +27,6 @@ Utilizamos o conjunto de dados público **Tips**, que contém registros de consu
 ---
 
 ## 2. ⚙️ Implementação Técnica (ETL e Modelagem)
-*(Critério de Avaliação: 15 pontos)*
 
 A solução foi desenvolvida inteiramente em **Python**, utilizando o ambiente **Google Colab**. Abaixo, detalhamos o pipeline de dados construído:
 
@@ -53,7 +52,6 @@ A solução foi desenvolvida inteiramente em **Python**, utilizando o ambiente *
 ---
 
 ## 3. 📈 Visualizações e Interpretação dos Resultados
-*(Critério de Avaliação: 10 pontos)*
 
 ### Análise Exploratória (EDA)
 Durante a fase de exploração, geramos visualizações que trouxeram os seguintes insights:
