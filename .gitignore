@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# Data
+data/raw/
+# se quiser versionar processed, não ignore processed; caso contrário:
+# data/processed/
+
+# Models
+models/
+
+# Reports
+reports/
+
+# VSCode
+.vscode/
