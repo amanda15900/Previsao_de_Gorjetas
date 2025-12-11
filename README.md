@@ -69,6 +69,4 @@ Após o treinamento, o modelo foi submetido aos dados de teste, obtendo as segui
 **Análise Crítica:** O resultado é satisfatório considerando que o ato de dar gorjeta possui um componente subjetivo (humano) que não pode ser totalmente capturado apenas pelos dados da conta.
 
 ---
-### Como Executar o Projeto
 
-O arquivo principal é o notebook `.ipynb`. Basta abri-lo no Google Colab ou Jupyter e executar todas as células.
